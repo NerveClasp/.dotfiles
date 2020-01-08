@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+# custom
+tmux/tmux/resurrect
+tmux/tmux/plugins
