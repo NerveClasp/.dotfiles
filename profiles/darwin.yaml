@@ -22,28 +22,36 @@ target: "$HOME/.config"
 #   - echo "Bar"
 
 # `dotfiles` to be deployed
-dotfiles:
-  # Relative path in `dotfiles/`
-  - path: base/user
-    overwrite_target: "$HOME/.config/nvim/lua/user"
-    merge: Overwrite
-    # Optional: Whether this file is a template or not (skips template actions (replace, ..) if not)
-    # Default: true
-    template: false
-  - path: base/fish
-    overwrite_target: "$HOME/.config/fish"
-    merge: Overwrite
-    template: false
-  - path: base/omf
-    overwrite_target: "$HOME/.config/omf"
-    merge: Overwrite
-    template: false
-  - path: base/wezterm
-    overwrite_target: "$HOME/.config/wezterm"
-    merge: Overwrite
-    template: false
+# dotfiles:
+#   # Relative path in `dotfiles/`
+#   - path: base/user
+#     overwrite_target: "$HOME/.config/nvim/lua/user"
+#     merge: Overwrite
+#     # Optional: Whether this file is a template or not (skips template actions (replace, ..) if not)
+#     # Default: true
+#     template: false
+#   - path: base/fish
+#     overwrite_target: "$HOME/.config/fish"
+#     merge: Overwrite
+#     template: false
+#   - path: base/omf
+#     overwrite_target: "$HOME/.config/omf"
+#     merge: Overwrite
+#     template: false
+#   - path: base/wezterm
+#     overwrite_target: "$HOME/.config/wezterm"
+#     merge: Overwrite
+#     template: false
 # Symlinks to be created
-# links:
+links:
+  - source_path: "$HOME/.dotfiles/dotfiles/base/wezterm"
+    target_path: "~/.config/wezterm"
+  - source_path: "$HOME/.dotfiles/dotfiles/base/fish"
+    target_path: "~/.config/fish"
+  - source_path: "$HOME/.dotfiles/dotfiles/base/omf"
+    target_path: "~/.config/omf"
+  - source_path: "$HOME/.dotfiles/dotfiles/base/user"
+    target_path: "~/.config/nvim/lua/user"
 # Absolute path to target of the link
 # - source_path: "$HOME/configurations"
 #   # Absolute path to the source of the link
