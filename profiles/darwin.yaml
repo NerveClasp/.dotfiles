@@ -24,19 +24,22 @@ target: "$HOME/.config"
 # `dotfiles` to be deployed
 dotfiles:
   # Relative path in `dotfiles/`
-  - path: base/AstroNvim/lua/user
+  - path: base/user
     overwrite_target: "$HOME/.config/nvim/lua/user"
     merge: Overwrite
     # Optional: Whether this file is a template or not (skips template actions (replace, ..) if not)
     # Default: true
     template: false
   - path: base/fish
+    overwrite_target: "$HOME/.config/fish"
     merge: Overwrite
     template: false
   - path: base/omf
+    overwrite_target: "$HOME/.config/omf"
     merge: Overwrite
     template: false
   - path: base/wezterm
+    overwrite_target: "$HOME/.config/wezterm"
     merge: Overwrite
     template: false
 # Symlinks to be created
