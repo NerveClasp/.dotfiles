@@ -1,24 +1,22 @@
-extends:
-  - base
+# extends:
+#   - base
 
 variables:
   OS: "darwin"
 
-transformers:
-  - LineTerminator: CRLF
-
 target: "$HOME/.config"
 
-pre_hooks:
-  - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  - brew install fish fnm neovim zellij tmux lazygit ripgrep redis
-  - brew install --cask wezterm
-  - brew install -g gdu
-  - brew install koekeishiya/formulae/yabai
-  - fish
-  - set -Ua fish_user_paths $HOME/.cargo/bin
-  - set -Ua fish_user_paths $HOME/.bin
-  - git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+# @TODO: redirect stdout errors
+# pre_hooks:
+#   - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+#   - brew install fish fnm neovim zellij tmux lazygit ripgrep redis
+#   - brew install --cask wezterm
+#   - brew install -g gdu
+#   - brew install koekeishiya/formulae/yabai
+#   - fish
+#   - set -Ua fish_user_paths $HOME/.cargo/bin
+#   - set -Ua fish_user_paths $HOME/.bin
+#   - git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
 
 # post_hooks:
 #   - echo "Bar"

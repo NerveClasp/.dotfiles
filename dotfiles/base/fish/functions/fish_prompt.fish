@@ -1,0 +1,1 @@
+/Users/rh/.local/share/omf/themes/barracuda/fish_prompt.fish
