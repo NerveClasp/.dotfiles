@@ -1,0 +1,6 @@
+#!/bin/bash
+
+wal --backend colorz -n -q -e -i "$(cat ~/.config/variety/wallpaper/wallpaper.jpg.txt)"
+source "$HOME/.cache/wal/colors.sh"
+ASUSCTL_CLR=$(echo "$color3" | sed 's/#//')
+asusctl led-mode static -c "$ASUSCTL_CLR"

@@ -1,0 +1,11 @@
+#!/bin/sh
+if file ~/.local/share/bg | grep -iq '.png' ; then
+  sudo cp ~/.local/share/bg /boot/grub/bg.png
+  sudo cp /etc/default/grub_png /etc/default/grub
+  echo 'PNG'
+else
+  sudo cp ~/.local/share/bg /boot/grub/bg.jpg
+  sudo cp /etc/default/grub_jpg /etc/default/grub
+  echo 'JPG'
+fi
+sudo update-grub

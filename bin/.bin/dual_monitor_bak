@@ -1,0 +1,62 @@
+#!/bin/bash
+
+hdmi_nvidia="HDMI-0"
+hdmi_nvidia_connected=$(xrandr -q | grep -c "$hdmi_nvidia connected")
+hdmi_mixed="HDMI-1-1"
+hdmi_mixed_connected=$(xrandr -q | grep -c "$hdmi_mixed connected")
+
+third_nvidia="DP-1"
+third_mixed="DP-1-1"
+
+monitor=eDP1
+monitor_connected=$(xrandr -q | grep -c "$monitor connected")
+monitor_nvidia=eDP-1-1
+monitor_nvidia_connected=$(xrandr -q | grep -c "$monitor_nvidia connected")
+monitor_mixed=eDP-1
+monitor_mixed_connected=$(xrandr -q | grep -c "$monitor_mixed connected")
+third_connected=$(xrandr -q | grep -c "$third_nvidia connected")
+third_mixed_connected=$(xrandr -q | grep -c "$third_mixed connected")
+
+if [ $hdmi_nvidia_connected -ge 1 ] || [ $hdmi_mixed_connected -ge 1 ]; then
+  if [ $hdmi_nvidia_connected -ge 1 ]; then
+    echo "external nvidia HDMI connected"
+    if [ $third_connected -ge 1 ]; then
+        echo "third monitor is connected as well"
+
+        xrandr --output "$monitor_nvidia" --primary --mode 1920x1080 --rotate normal --output "$hdmi_nvidia" --mode 2560x1080 --rotate normal --left-of "$monitor_nvidia" --output "$third_nvidia" --mode 1920x1080 --rotate normal --right-of "$monitor_nvidia"
+    else
+        #xrandr --output "$monitor_nvidia" --primary --mode 1920x1080 --rotate normal --output "$hdmi_nvidia" --mode 2560x1080 --rotate normal --left-of "$monitor_nvidia"
+        xrandr --output "$monitor_nvidia" --primary --mode 1920x1080 --rotate normal --output "$hdmi_nvidia" --mode 1920x1080 --rotate normal --left-of "$monitor_nvidia"
+    fi
+  fi
+
+  if [ $hdmi_mixed_connected -ge 1 ]; then
+    echo "external mixed HDMI connected"
+    xrandr --output "$monitor_mixed" --primary --mode 1920x1080 --rotate normal --output "$hdmi_mixed" --mode 2560x1080 --rotate normal --left-of "$monitor_mixed"
+
+  fi
+elif [ $third_connected -ge 1 ] || [ $third_mixed_connected -ge 1 ]; then
+  echo "internal monitor is in mixed mode"
+  echo "second monitor is connected as well"
+  if [ $third_mixed_connected -ge 1 ]; then
+    xrandr --output "$monitor_mixed" --primary --mode 1920x1080 --rotate normal --output "$third_mixed" --mode 1920x1080 --rotate normal --right-of "$monitor_mixed"
+  else
+    xrandr --output "$monitor_mixed" --primary --mode 1920x1080 --rotate normal --output "$hdmi_mixed" --mode 1920x1080 --rotate normal --right-of "$monitor_mixed"
+  fi
+else
+  if [ $monitor_connected -ge 1 ]; then
+    echo "internal monitor is in Intel mode"
+    xrandr --output "$monitor" --primary --mode 1920x1080 --rotate normal
+  fi
+
+  if [ $monitor_nvidia_connected -ge 1 ]; then
+    echo "internal monitor is in Nvidia mode"
+    xrandr --output "$monitor_nvidia" --primary --mode 1920x1080 --rotate normal --output "$hdmi_nvidia" --off
+  fi
+
+  if [ $monitor_mixed_connected -ge 1 ]; then
+    echo "internal monitor is in mixed mode"
+    xrandr --output "$monitor_mixed" --primary --mode 1920x1080 --rotate normal --output "$hdmi_mixed" --off
+  fi
+fi
+

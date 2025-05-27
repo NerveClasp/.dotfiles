@@ -1,0 +1,21 @@
+#!/bin/bash
+
+color0=$(cat ~/.cache/wal/colors | grep '#' | sed -r 's/#//g' | head -n 10 | tail -n 1)
+color1=$(cat ~/.cache/wal/colors | grep '#' | sed -r 's/#//g' | head -n 11 | tail -n 1)
+color2=$(cat ~/.cache/wal/colors | grep '#' | sed -r 's/#//g' | head -n 12 | tail -n 1)
+color3=$(cat ~/.cache/wal/colors | grep '#' | sed -r 's/#//g' | head -n 13 | tail -n 1)
+color4=$(cat ~/.cache/wal/colors | grep '#' | sed -r 's/#//g' | head -n 14 | tail -n 1)
+color5=$(cat ~/.cache/wal/colors | grep '#' | sed -r 's/#//g' | head -n 15 | tail -n 1)
+color6=$(cat ~/.cache/wal/colors | grep '#' | sed -r 's/#//g' | head -n 16 | tail -n 1)
+#echo $color1
+#echo $color2
+#sudo rogauracore single_breathing $color1 $color2 1
+#sudo rogauracore multi_breathing $color1 $color2 $color3 $color4 1
+
+#sudo rogauracore single_static $color2
+#sudo rogauracore single_static $(cat ~/.cache/wal/colors | grep '#' | sed -r 's/#//g' | head -n 12 | tail -n 1)
+rog-core led-mode stable -c $color0
+
+#highlights keys that are pressed with a selected color
+#rog-core led-mode highlight -c $color2 -s low
+

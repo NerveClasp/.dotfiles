@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# be sure to set minimum brightness first
+# light -N [VALUE]
+# run with -v3 (verbose) if there are any issues
+
+current_brightness=$(light -G)
+minimum_brightness=$(light -P)
+
+if [[ "${current_brightness}" == "${minimum_brightness}" ]]; then
+  # restoring saved brightness
+  light -I -s sysfs/backlight/intel_backlight;
+else
+  # setting minimum brightness
+  light -O -s sysfs/backlight/intel_backlight;
+  light -S "${minimum_brightness}" -s sysfs/backlight/intel_backlight;
+fi

@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# This script does the following:
+#	Run by itself, set the wallpaper (at X start).
+#	If given a file, set that as the new wallpaper.
+#	If given a directory, choose random file in it.
+#	If wal is installed, also generates a colorscheme.
+
+# Location of link to wallpaper link.
+bgloc="${XDG_DATA_HOME:-$HOME/.local/share/}/bg"
+
+[ -f "$1" ] && ln -sf "$(readlink -f "$1")" "$bgloc" 
+
+[ -d "$1" ] && ln -sf "$(find "$(readlink -f "$1")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc"
+
+# If pywal is installed, use it.
+#wal --backend haishoku -s -i "$(readlink -f "$bgloc")" -o "${XDG_CONFIG_HOME:-$HOME/.config}/wal/postrun" >/dev/null 2>&1
+backend_0=wal
+backend_1=colorthief
+backend_2=colorz
+backend_3=haishoku
+backend_4=schemer2
+
+#wal --backend $backend_2 -s -i "$(readlink -f "$bgloc")"
+wal -n -i "$(readlink -f "$bgloc")" --backend "$backend_2" --iterative
+pywalfox update
+
+#pidof dwm >/dev/null && xdotool key super+F12
+xwallpaper --zoom "$bgloc"
+
+chkeys
+
+killall dunst
+dunst &
+kde_setbg
+
+# Reboots bspwm if a new wallpaper is provided
+([ -f "$1" ] || [ -d "$1" ]) && bspwm-update-theme
+# ([ -f "$1" ] || [ -d "$1" ]) && bspc wm -r
+# bspwmrc &
+# razer-cli -a
+
+#alacritty_xr_color_scheme ~/.config/alacritty/alacritty.yml
+

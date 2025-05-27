@@ -1,0 +1,136 @@
+#!/bin/bash
+
+mode_laptop="1920x1080"
+mode_hdmi="1920x1080"
+mode_usb="1920x1080"
+
+rotate_laptop="normal"
+rotate_hdmi="normal"
+rotate_usb="left"
+
+laptop="eDP1"
+laptop_connected=$(xrandr -q | grep -c "$laptop connected")
+
+# hybrid_laptop="eDP-1"
+# hybrid_hdmi="HDMI-1"
+# hybrid_usb="DP-1-0"
+hybrid_laptop="eDP"
+hybrid_hdmi="HDMI-A-0"
+hybrid_usb="DP-1-0"
+hybrid_laptop_connected=$(xrandr -q | grep -c "$hybrid_laptop connected")
+hybrid_hdmi_connected=$(xrandr -q | grep -c "$hybrid_hdmi connected")
+hybrid_usb_connected=$(xrandr -q | grep -c "$hybrid_usb connected")
+
+
+nvidia_laptop="eDP-1-1"
+nvidia_hdmi="HDMI-1-1"
+nvidia_usb="DP-0"
+nvidia_laptop_connected=$(xrandr -q | grep -c "$nvidia_laptop connected")
+nvidia_hdmi_connected=$(xrandr -q | grep -c "$nvidia_hdmi connected")
+nvidia_usb_connected=$(xrandr -q | grep -c "$nvidia_usb connected")
+
+amd_laptop="eDP"
+amd_laptop_connected=$(xrandr -q | grep -c "$amd_laptop connected")
+amd_hdmi="HDMI-A-0"
+amd_hdmi_connected=$(xrandr -q | grep -c "$amd_hdmi connected")
+amd_usb="DP-A-0"
+amd_usb_connected=$(xrandr -q | grep -c "$amd_usb connected")
+
+if [ "$laptop_connected" -ge 1 ]; then
+  echo "nvidia is disabled"
+  xrandr --output "$laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop"
+elif [ "$hybrid_laptop_connected" -ge 1 ]; then
+  echo "nvidia is in hybrid mode"
+  if [ "$hybrid_hdmi_connected" -ge 1 ] || [ "$hybrid_usb_connected" -ge 1 ]; then
+    if [ "$hybrid_hdmi_connected" -ge 1 ] && [ "$hybrid_usb_connected" -ge 1 ]; then
+      echo "both hybrid mode monitors are connected"
+      xrandr --output "$hybrid_hdmi" --primary --mode "$mode_hdmi" --rotate "$rotate_hdmi"\
+        --output "$hybrid_laptop" --mode "$mode_laptop" --rotate "$rotate_laptop" --below "$hybrid_hdmi"\
+        --output "$hybrid_usb" --mode "$mode_usb" --rotate "$rotate_usb" --right-of "$hybrid_hdmi"
+    elif [ "$hybrid_hdmi_connected" -ge 1 ]; then
+      echo "main hdmi external laptop is connected"
+      xrandr --output "$hybrid_hdmi" --primary --mode "$mode_hdmi" --rotate "$rotate_hdmi"\
+        --output "$hybrid_laptop" --mode "$mode_laptop" --rotate "$rotate_laptop" --below "$hybrid_hdmi"
+    else
+      echo "usb hdmi external laptop is connected"
+      xrandr --output "$hybrid_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop"\
+        --output "$hybrid_usb" --mode "$mode_usb" --rotate "$rotate_usb" --right-of "$hybrid_laptop"
+    fi
+  else
+    echo "external monitor(s) not connected"
+    xrandr --output "$hybrid_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop"
+  fi
+elif [ "$nvidia_laptop_connected" -ge 1 ]; then
+  echo "nvidia to the win"
+  if [ "$nvidia_hdmi_connected" -ge 1 ] || [ "$nvidia_usb_connected" -ge 1 ]; then
+    if [ "$nvidia_hdmi_connected" -ge 1 ] && [ "$nvidia_usb_connected" -ge 1 ]; then
+      echo "both external laptops are connected"
+      xrandr --output "$nvidia_hdmi" --primary --mode "$mode_hdmi" --rotate "$rotate_hdmi"\
+        --output "$nvidia_laptop" --mode "$mode_laptop" --rotate "$rotate_laptop" --below "$nvidia_hdmi"\
+        --output "$nvidia_usb" --mode "$mode_usb" --rotate "$rotate_usb" --right-of "$nvidia_hdmi"
+    elif [ "$nvidia_hdmi_connected" -ge 1 ]; then
+      echo "main hdmi external laptop is connected"
+      xrandr --output "$nvidia_hdmi" --primary --mode "$mode_hdmi" --rotate "$rotate_hdmi"\
+        --output "$nvidia_laptop" --mode "$mode_laptop" --rotate "$rotate_laptop" --below "$nvidia_hdmi"
+    else
+      echo "usb hdmi external laptop is connected"
+      xrandr --output "$nvidia_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop"\
+        --output "$nvidia_usb" --mode "$mode_usb" --rotate "$rotate_usb" --right-of "$nvidia_laptop"
+    fi
+  else
+    echo "no external laptops connected"
+    xrandr --output "$nvidia_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop"
+  fi
+elif [ "$amd_laptop_connected" -ge 1 ]; then
+  echo "amd to the win"
+  if [ "$amd_hdmi_connected" -ge 1 ] || [ "$amd_usb_connected" -ge 1 ]; then
+    if [ "$amd_hdmi_connected" -ge 1 ] && [ "$amd_usb_connected" -ge 1 ]; then
+      echo "both external laptops are connected"
+      xrandr --output "$amd_hdmi" --primary --mode "$mode_hdmi" --rotate "$rotate_hdmi"\
+        --output "$amd_laptop" --mode "$mode_laptop" --rotate "$rotate_laptop" --below "$amd_hdmi"\
+        --output "$amd_usb" --mode "$mode_usb" --rotate "$rotate_usb" --right-of "$amd_hdmi"
+    elif [ "$amd_hdmi_connected" -ge 1 ]; then
+      echo "main hdmi external laptop is connected"
+      xrandr --output "$amd_hdmi" --primary --mode "$mode_hdmi" --rotate "$rotate_hdmi"\
+        --output "$amd_laptop" --mode "$mode_laptop" --rotate "$rotate_laptop" --below "$amd_hdmi"
+    else
+      echo "usb hdmi external laptop is connected"
+      xrandr --output "$amd_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop"\
+        --output "$amd_usb" --mode "$mode_usb" --rotate "$rotate_usb" --right-of "$amd_laptop"
+    fi
+  else
+    echo "no external laptops connected"
+    xrandr --output "$amd_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop"
+  fi
+fi
+
+# ~/.config/polybar/shapes/launch.sh &
+
+# if [ $hybrid_hdmi_connected -ge 1 ] || [ $nvidia_hdmi_connected -ge 1 ]; then
+#   if [ $hybrid_hdmi_connected -ge 1 ]; then
+#     echo "external nvidia HDMI connected"
+#     xrandr --output "$nvidia_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop" --output "$hybrid_hdmi" --mode 2560x1080 --rotate normal --above "$nvidia_laptop"
+#   fi
+
+#   if [ $nvidia_hdmi_connected -ge 1 ]; then
+#     echo "external hybrid HDMI connected"
+#     xrandr --output "$hybrid_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop" --output "$nvidia_hdmi" --mode "$mode_laptop" --rotate "$rotate_laptop" --above "$hybrid_laptop"
+#     # xrandr --output "$hybrid_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop" --output "$nvidia_hdmi" --mode 2560x1080 --rotate normal --above "$hybrid_laptop"
+
+#   fi
+# else
+#   if [ $laptop_connected -ge 1 ]; then
+#     echo "internal laptop is in Intel mode"
+#     xrandr --output "$laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop"
+#   fi
+
+#   if [ $nvidia_laptop_connected -ge 1 ]; then
+#     echo "internal laptop is in Nvidia mode"
+#     xrandr --output "$nvidia_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop" --output "$hybrid_hdmi" --off
+#   fi
+
+#   if [ $hybrid_laptop_connected -ge 1 ]; then
+#     echo "internal laptop is in hybrid mode"
+#     xrandr --output "$hybrid_laptop" --primary --mode "$mode_laptop" --rotate "$rotate_laptop" --output "$nvidia_hdmi" --off
+#   fi
+# fi

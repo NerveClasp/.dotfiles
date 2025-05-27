@@ -1,0 +1,5 @@
+#!/bin/sh
+
+setbg "$1"
+spicetify apply
+updgrub
