@@ -299,12 +299,12 @@ alias an="astronvim"
 # if status --is-interactive && type -q neofetch
 #    neofetch
 # end
-# set -g PATH "/home/romka/.espressif/tools/xtensa-esp32-elf-clang/esp-14.0.0-20220415-x86_64-unknown-linux-gnu/bin/:$PATH"
-# set -g LIBCLANG_PATH "/home/romka/.espressif/tools/xtensa-esp32-elf-clang/esp-14.0.0-20220415-x86_64-unknown-linux-gnu/lib/"
+# set -g PATH "~/.espressif/tools/xtensa-esp32-elf-clang/esp-14.0.0-20220415-x86_64-unknown-linux-gnu/bin/:$PATH"
+# set -g LIBCLANG_PATH "~/.espressif/tools/xtensa-esp32-elf-clang/esp-14.0.0-20220415-x86_64-unknown-linux-gnu/lib/"
 # set -g PIP_USER no
 
 # pnpm
-set -gx PNPM_HOME "/home/romka/.local/share/pnpm"
+set -gx PNPM_HOME "~/.local/share/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
 # set -gx RUSTC_WRAPPER "sccache"
 # pnpm end
