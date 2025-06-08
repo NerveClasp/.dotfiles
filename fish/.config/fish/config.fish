@@ -306,6 +306,5 @@ alias an="astronvim"
 # pnpm
 set -gx PNPM_HOME "/home/romka/.local/share/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
-set -gx GEMINI_API_KEY AIzaSyDpd8gIMHoeQHD-MesymQtPNNFUyGJguIY
 # set -gx RUSTC_WRAPPER "sccache"
 # pnpm end
