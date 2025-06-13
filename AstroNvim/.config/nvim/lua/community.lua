@@ -47,12 +47,12 @@ return {
   { import = "astrocommunity.indent.mini-indentscope" },
   { import = "astrocommunity.markdown-and-latex.markdown-preview-nvim" },
   -- { import = "astrocommunity.workflow.hardtime-nvim" }, -- this one shows all those messages about arrows and many `j`s
-  {
-    "m4xshen/hardtime.nvim",
-    opts = {
-      disable_mouse = false,
-    },
-  },
+  -- {
+  --   "m4xshen/hardtime.nvim",
+  --   opts = {
+  --     disable_mouse = false,
+  --   },
+  -- },
   { import = "astrocommunity.note-taking.obsidian-nvim" },
   { import = "astrocommunity.diagnostics.trouble-nvim" },
   { import = "astrocommunity.motion.mini-ai" },
