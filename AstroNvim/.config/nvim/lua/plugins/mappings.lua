@@ -83,12 +83,6 @@ maps.n["<space>sg"] = { "<cmd>Telescope highlights<cr>", desc = "Highlight group
 -- maps.n["<leader>z"] = { "<cmd>ZenMode<cr>", desc = "Zen Mode" }
 maps.n["<C-s>"] = false
 
-maps.n["<leader>pn"] = { desc = "Node Packages" }
-maps.n["<leader>pnd"] = { "<cmd>lua require('package-info').delete()<cr>", desc = "Delete" }
-maps.n["<leader>pni"] = { "<cmd>lua require('package-info').install()<cr>", desc = "Install" }
-maps.n["<leader>pnc"] = { "<cmd>lua require('package-info').change_version()<cr>", desc = "Change Version" }
-maps.n["<leader>pnu"] = { "<cmd>lua require('package-info').update()<cr>", desc = "Update" }
-
 return {
   {
     "AstroNvim/astrocore",
