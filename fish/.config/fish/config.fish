@@ -306,5 +306,6 @@ alias an="astronvim"
 # pnpm
 set -gx PNPM_HOME "~/.local/share/pnpm"
 set -gx PATH "$PNPM_HOME" $PATH
+set -gx SSH_ASKPASS /usr/bin/ksshaskpass
 # set -gx RUSTC_WRAPPER "sccache"
 # pnpm end
